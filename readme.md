@@ -2,13 +2,22 @@
 
 Initializes a Canvas with a MeshBasicMaterial on an orthographic plane.
 
+### Uniforms
+The shader is compiled with these uniforms by default.
+
+- **uTime** float   
+  The current `performance.now()`
+
+- **uMouse** vec2  
+  The current mouse position over the gl context
+
 ### Example
 
 ![gif](./assets/shader.gif)
 
 ```js
 export default function App() {
-  let [tex] = useState(new TextureLoader().load('./path/to/my/texture.jpg'));
+  let [tex] = useState(new TextureLoader().load("./path/to/my/texture.jpg"));
 
   useEffect(() => {
     if (tex) {
@@ -30,6 +39,12 @@ export default function App() {
       >
         <ShaderPlane
           map={tex}
+          uniforms={{
+            myCustomUniform: {
+              type: 'float',
+              value: 10.0
+            }
+          }}
           onFrame={shader => {
             // do something
           }}
@@ -66,7 +81,7 @@ export default function App() {
             }
           `}
           fragmentShader={`
-            vec2 uv2 = vUv * 1. * snoise(vUv + uTime * .0001) * 10.;
+            vec2 uv2 = vUv * 1. * snoise(vUv + uTime * .0001) * myCustomUniform;
 
             diffuseColor = texture2D(map, uv2);
           `}
