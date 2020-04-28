@@ -8,7 +8,7 @@ Initializes a Canvas with a MeshBasicMaterial on an orthographic plane.
 
 ```js
 export default function App() {
-  let [tex] = useState(new TextureLoader().load(alyx));
+  let [tex] = useState(new TextureLoader().load('./path/to/my/texture.jpg'));
 
   useEffect(() => {
     if (tex) {
@@ -71,7 +71,6 @@ export default function App() {
             diffuseColor = texture2D(map, uv2);
           `}
         />
-        ;
       </div>
     </>
   );
